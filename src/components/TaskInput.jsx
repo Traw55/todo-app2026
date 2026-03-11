@@ -15,7 +15,7 @@ const TaskInput = ({
   t
 }) => {
   // Helper to show user-friendly date
-  const formatDisplayDate = (isoDate, locale = "en-CA") => {
+  const formatDisplayDate = (isoDate, locale = navigator.language || "en-US") => {
     if (!isoDate) return "";
     const dateObj = new Date(isoDate);
     return dateObj.toLocaleDateString(locale, {
@@ -25,7 +25,7 @@ const TaskInput = ({
     });
   };
 
-  const locale = "en-CA"; // ثابت، ما يتأثر بلغة الجهاز
+  const locale = navigator.language || "en-US";
   const displayDate = formatDisplayDate(scheduledDate, locale);
 
   return (
