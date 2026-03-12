@@ -74,18 +74,51 @@ const TaskItem = ({
           />
           {/* حقول التاريخ والوقت / Date and Time inputs */}
           <div className="edit-meta">
-            <input
-              type="date"
-              className="edit-date-input"
-              value={editDate}
-              onChange={(e) => setEditDate(e.target.value)}
-            />
-            <input
-              type="time"
-              className="edit-time-input"
-              value={editTime}
-              onChange={(e) => setEditTime(e.target.value)}
-            />
+            {lang === 'ar' ? (
+              <>
+                <input
+                  type="time"
+                  className="edit-time-input"
+                  value={editTime}
+                  onChange={(e) => setEditTime(e.target.value)}
+                  lang={lang}
+                  data-ar-text={
+                    lang === 'ar' && editTime 
+                      ? new Date(`2000-01-01T${editTime}`).toLocaleTimeString("ar-SA", { hour: '2-digit', minute: '2-digit' })
+                      : ""
+                  }
+                />
+                <input
+                  type="date"
+                  className="edit-date-input"
+                  value={editDate}
+                  onChange={(e) => setEditDate(e.target.value)}
+                  lang={lang}
+                  data-ar-text={
+                    lang === 'ar' && editDate
+                      ? new Date(editDate).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" })
+                      : ""
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <input
+                  type="date"
+                  className="edit-date-input"
+                  value={editDate}
+                  onChange={(e) => setEditDate(e.target.value)}
+                  lang={lang}
+                />
+                <input
+                  type="time"
+                  className="edit-time-input"
+                  value={editTime}
+                  onChange={(e) => setEditTime(e.target.value)}
+                  lang={lang}
+                />
+              </>
+            )}
           </div>
           {/* اختيار التذكير في وضع التعديل / Reminder selection in edit mode */}
           <div className="edit-reminder-group">
@@ -114,7 +147,12 @@ const TaskItem = ({
           <div className="todo-content">
             <span className="todo-text">{todo.text}</span>
             <div className="todo-meta">
-              <span className="todo-date">{todo.date}</span>
+              <span className="todo-date">
+                {lang === 'ar' 
+                  ? new Date(todo.date).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" })
+                  : todo.date
+                }
+              </span>
               <span className="todo-time">{formatTime12h(todo.time)}</span>
             </div>
           </div>

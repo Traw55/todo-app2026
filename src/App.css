@@ -355,16 +355,10 @@ main {
 }
 
 .date-time-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 24px;
-}
-
-@media (max-width: 600px) {
-  .date-time-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .schedule-group label {
@@ -379,10 +373,10 @@ main {
   background: var(--bg-input);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
-  padding: 12px;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius:15px;
   width: 100%;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   outline: none;
   box-sizing: border-box;
   font-family: inherit;
@@ -390,18 +384,75 @@ main {
 
 /* Fix for RTL native date/time inputs - prevent mangling of slashes and numbers */
 .rtl .date-input, .rtl .time-input, .rtl .edit-date-input, .rtl .edit-time-input {
-  direction: ltr !important;
-  text-align: left !important;
-  /* Add padding to the left to avoid text sticking to the edge in LTR */
-  padding-left: 12px !important;
-  /* Add padding to the right for the native picker icon */
-  padding-right: 30px !important;
+  /* Remove native icon from the right */
+  /* padding-left: 30px !important;  <- space for the icon if on the left */
+  /* padding-right: 12px !important; */
+  /* Webkit-specific to move the icon to the left */
+  direction: rtl !important; 
+  text-align: right !important;
 }
 
-/* Ensure placeholder is visible if needed, although native inputs often have their own formatting */
+.rtl .date-input,
+.rtl .time-input {
+  position: relative;
+  color: transparent !important; /* Hide the native LTR date string */
+  padding: 14px 20px !important;
+  min-height: 52px;
+}
+
+/* Pseudo-element to show the Hijri date/Time from data attribute */
+.rtl .date-input::before,
+.rtl .time-input::before {
+  content: attr(data-ar-text);
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-primary);
+  pointer-events: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  white-space: nowrap; /* Prevent text wrapping inside the input */
+}
+
+@media (max-width: 480px) {
+  .rtl .date-input::before,
+  .rtl .time-input::before {
+    font-size: 0.85rem; /* Smaller font on very small screens */
+    right: 15px;
+  }
+  .rtl .date-input::-webkit-calendar-picker-indicator,
+  .rtl .time-input::-webkit-calendar-picker-indicator {
+    left: 15px;
+  }
+}
+
+/* Move the native picker icon to the left in webkit browsers */
+.rtl .date-input::-webkit-calendar-picker-indicator,
+.rtl .time-input::-webkit-calendar-picker-indicator,
+.rtl .edit-date-input::-webkit-calendar-picker-indicator,
+.rtl .edit-time-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 20px; /* Symmetrical padding from left */
+}
+
+/* Ensure native LTR text is HIDDEN so it doesn't overlap with our custom Arabic text */
 .rtl .date-input::-webkit-datetime-edit, 
-.rtl .time-input::-webkit-datetime-edit {
-  display: flex;
+.rtl .time-input::-webkit-datetime-edit,
+.rtl .edit-date-input::-webkit-datetime-edit,
+.rtl .edit-time-input::-webkit-datetime-edit {
+  display: none !important;
+}
+
+/* Make sure the icon is clickable and visible on the left */
+.rtl .date-input::-webkit-calendar-picker-indicator,
+.rtl .time-input::-webkit-calendar-picker-indicator,
+.rtl .edit-date-input::-webkit-calendar-picker-indicator,
+.rtl .edit-time-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 20px;
+  cursor: pointer;
+  opacity: 1;
 }
 
 .reminder-group, .edit-reminder-group {

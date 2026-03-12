@@ -275,12 +275,21 @@ function App() {
 
   const formatDate = (date) => {
     try {
-      return date.toLocaleDateString(lang === "ar" ? "ar-u-ca-gregory-nu-latn" : "en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
+      if (lang === "ar") {
+        return date.toLocaleDateString("ar-SA-u-ca-islamic", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      } else {
+        return date.toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      }
     } catch {
       return date.toDateString();
     }
@@ -350,6 +359,7 @@ function App() {
             setReminderOffset={setReminderOffset}
             addTodo={addTodo}
             t={t}
+            lang={lang}
           />
           <TaskList 
             todos={todos}

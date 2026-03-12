@@ -12,21 +12,10 @@ const TaskInput = ({
   reminderOffset,
   setReminderOffset,
   addTodo,
-  t
+  t,
+  lang
 }) => {
-  // Helper to show user-friendly date
-  const formatDisplayDate = (isoDate, locale = navigator.language || "en-US") => {
-    if (!isoDate) return "";
-    const dateObj = new Date(isoDate);
-    return dateObj.toLocaleDateString(locale, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
 
-  const locale = navigator.language || "en-US";
-  const displayDate = formatDisplayDate(scheduledDate, locale);
 
   return (
     <aside className="input-section">
@@ -41,39 +30,71 @@ const TaskInput = ({
         />
 
         <div className="date-time-grid">
-          {/* التاريخ */}
-          <div className="schedule-group">
-            <label>{t.scheduleDateLabel}</label>
-            <input
-              type="date"
-              className="date-input"
-              value={scheduledDate}
-              onChange={(e) => setScheduledDate(e.target.value)}
-              pattern="\d{4}-\d{2}-\d{2}"
-              inputMode="numeric"
-              lang={locale}
-            />
-            <div className="date-display">
-              {displayDate && (
-                <span style={{ fontSize: "0.9em", color: "#888" }}>
-                  {displayDate}
-                </span>
-              )}
-            </div>
-          </div>
+          {lang === 'ar' ? (
+            <>
+              {/* التاريخ - يعرض أولاً ليكون فوق */}
+              <div className="schedule-group">
+                <label>{t.scheduleDateLabel}</label>
+                <input
+                  type="date"
+                  className="date-input"
+                  value={scheduledDate}
+                  onChange={(e) => setScheduledDate(e.target.value)}
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  inputMode="numeric"
+                  lang={lang}
+                  data-ar-text={lang === 'ar' ? new Date(scheduledDate || new Date()).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" }) : ""}
+                />
+              </div>
 
-          {/* الوقت */}
-          <div className="schedule-group">
-            <label>{t.scheduleTimeLabel}</label>
-            <input
-              type="time"
-              className="time-input"
-              value={scheduledTime}
-              onChange={(e) => setScheduledTime(e.target.value)}
-              inputMode="numeric"
-              lang={locale}
-            />
-          </div>
+              {/* الوقت - يعرض ثانياً ليكون تحت */}
+              <div className="schedule-group">
+                <label>{t.scheduleTimeLabel}</label>
+                <input
+                  type="time"
+                  className="time-input"
+                  value={scheduledTime}
+                  onChange={(e) => setScheduledTime(e.target.value)}
+                  inputMode="numeric"
+                  lang={lang}
+                  data-ar-text={
+                    lang === 'ar' && scheduledTime 
+                      ? new Date(`2000-01-01T${scheduledTime}`).toLocaleTimeString("ar-SA", { hour: '2-digit', minute: '2-digit' })
+                      : ""
+                  }
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              {/* التاريخ */}
+              <div className="schedule-group">
+                <label>{t.scheduleDateLabel}</label>
+                <input
+                  type="date"
+                  className="date-input"
+                  value={scheduledDate}
+                  onChange={(e) => setScheduledDate(e.target.value)}
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  inputMode="numeric"
+                  lang={lang}
+                />
+              </div>
+
+              {/* الوقت */}
+              <div className="schedule-group">
+                <label>{t.scheduleTimeLabel}</label>
+                <input
+                  type="time"
+                  className="time-input"
+                  value={scheduledTime}
+                  onChange={(e) => setScheduledTime(e.target.value)}
+                  inputMode="numeric"
+                  lang={lang}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         {/* اختيار وقت التذكير / Reminder offset selection */}
