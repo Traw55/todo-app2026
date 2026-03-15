@@ -230,7 +230,7 @@ const TaskList = ({
       {!isAnyTaskVisible ? (
         <div className="empty-state">
           <div className="empty-icon">
-            <img src="/no-task.png" alt="No tasks" className="empty-img" />
+            <img src="/no-task (1).png" alt="No tasks" className="empty-img" />
           </div>
           <p className="empty-msg">{t.noTasks}</p>
         </div>

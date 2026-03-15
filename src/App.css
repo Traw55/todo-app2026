@@ -415,6 +415,9 @@ main {
   outline: none;
   box-sizing: border-box;
   font-family: inherit;
+  -webkit-appearance: none; /* iOS Fix */
+  appearance: none; /* Standard property for compatibility */
+  display: block; /* iOS Fix */
 }
 
 /* RTL Specific (Arabic) */
@@ -1192,6 +1195,10 @@ main {
   border-radius: 8px;
   font-size: 0.9rem;
   outline: none;
+  -webkit-appearance: none; /* iOS Fix */
+  display: block; /* iOS Fix */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .edit-actions {
@@ -1242,6 +1249,14 @@ main {
   width: 200px;
   height: auto;
   opacity: 0.8;
+  /* Since the new image is white, we invert it in Light Mode to make it dark */
+  filter: invert(1) brightness(0.2); 
+  transition: filter 0.3s ease;
+}
+
+.dark-theme .empty-img {
+  /* In Dark Mode, we keep it white (no filter needed for white on dark) */
+  filter: none;
 }
 
 .empty-msg {
