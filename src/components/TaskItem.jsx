@@ -82,8 +82,8 @@ const TaskItem = ({
                   value={editTime}
                   onChange={(e) => setEditTime(e.target.value)}
                   lang={lang}
-                  data-ar-text={
-                    lang === 'ar' && editTime 
+                  data-custom-text={
+                    editTime 
                       ? new Date(`2000-01-01T${editTime}`).toLocaleTimeString("ar-SA", { hour: '2-digit', minute: '2-digit' })
                       : ""
                   }
@@ -94,8 +94,8 @@ const TaskItem = ({
                   value={editDate}
                   onChange={(e) => setEditDate(e.target.value)}
                   lang={lang}
-                  data-ar-text={
-                    lang === 'ar' && editDate
+                  data-custom-text={
+                    editDate
                       ? new Date(editDate).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" })
                       : ""
                   }
@@ -104,18 +104,28 @@ const TaskItem = ({
             ) : (
               <>
                 <input
-                  type="date"
-                  className="edit-date-input"
-                  value={editDate}
-                  onChange={(e) => setEditDate(e.target.value)}
-                  lang={lang}
-                />
-                <input
                   type="time"
                   className="edit-time-input"
                   value={editTime}
                   onChange={(e) => setEditTime(e.target.value)}
                   lang={lang}
+                  data-custom-text={
+                    editTime 
+                      ? new Date(`2000-01-01T${editTime}`).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: true })
+                      : ""
+                  }
+                />
+                <input
+                  type="date"
+                  className="edit-date-input"
+                  value={editDate}
+                  onChange={(e) => setEditDate(e.target.value)}
+                  lang={lang}
+                  data-custom-text={
+                    editDate
+                      ? new Date(editDate).toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" })
+                      : ""
+                  }
                 />
               </>
             )}

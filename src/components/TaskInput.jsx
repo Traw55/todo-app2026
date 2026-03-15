@@ -43,7 +43,7 @@ const TaskInput = ({
                   pattern="\d{4}-\d{2}-\d{2}"
                   inputMode="numeric"
                   lang={lang}
-                  data-ar-text={lang === 'ar' ? new Date(scheduledDate || new Date()).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" }) : ""}
+                  data-custom-text={new Date(scheduledDate || new Date()).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" })}
                 />
               </div>
 
@@ -57,8 +57,8 @@ const TaskInput = ({
                   onChange={(e) => setScheduledTime(e.target.value)}
                   inputMode="numeric"
                   lang={lang}
-                  data-ar-text={
-                    lang === 'ar' && scheduledTime 
+                  data-custom-text={
+                    scheduledTime 
                       ? new Date(`2000-01-01T${scheduledTime}`).toLocaleTimeString("ar-SA", { hour: '2-digit', minute: '2-digit' })
                       : ""
                   }
@@ -78,6 +78,7 @@ const TaskInput = ({
                   pattern="\d{4}-\d{2}-\d{2}"
                   inputMode="numeric"
                   lang={lang}
+                  data-custom-text={scheduledDate ? new Date(scheduledDate).toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" }) : ""}
                 />
               </div>
 
@@ -91,6 +92,11 @@ const TaskInput = ({
                   onChange={(e) => setScheduledTime(e.target.value)}
                   inputMode="numeric"
                   lang={lang}
+                  data-custom-text={
+                    scheduledTime 
+                      ? new Date(`2000-01-01T${scheduledTime}`).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: true })
+                      : ""
+                  }
                 />
               </div>
             </>
