@@ -276,7 +276,7 @@ function App() {
   const formatDate = (date) => {
     try {
       if (lang === "ar") {
-        return date.toLocaleDateString("ar-SA-u-ca-islamic", {
+        return date.toLocaleDateString("ar-SA", {
           weekday: "long",
           year: "numeric",
           month: "long",

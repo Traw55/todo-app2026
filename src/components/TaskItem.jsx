@@ -84,7 +84,7 @@ const TaskItem = ({
                   lang={lang}
                   data-custom-text={
                     editTime 
-                      ? new Date(`2000-01-01T${editTime}`).toLocaleTimeString("ar-SA", { hour: '2-digit', minute: '2-digit' })
+                      ? new Date(`2000-01-01T${editTime}`).toLocaleTimeString("ar-SA", { hour: '2-digit', minute: '2-digit', hour12: true })
                       : ""
                   }
                 />
@@ -96,7 +96,7 @@ const TaskItem = ({
                   lang={lang}
                   data-custom-text={
                     editDate
-                      ? new Date(editDate).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" })
+                      ? new Date(editDate).toLocaleDateString("ar-SA", { year: "numeric", month: "2-digit", day: "2-digit" })
                       : ""
                   }
                 />
@@ -159,7 +159,7 @@ const TaskItem = ({
             <div className="todo-meta">
               <span className="todo-date">
                 {lang === 'ar' 
-                  ? new Date(todo.date).toLocaleDateString("ar-SA-u-ca-islamic", { year: "numeric", month: "long", day: "numeric" })
+                  ? new Date(todo.date).toLocaleDateString("ar-SA", { year: "numeric", month: "2-digit", day: "2-digit" })
                   : todo.date
                 }
               </span>
