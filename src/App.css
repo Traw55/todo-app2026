@@ -731,7 +731,8 @@ main.three-column-layout {
   background: var(--bg-input);
   padding: 5px;
   border-radius: 12px;
-  align-self: flex-start;
+  align-self: center; /* التمركز في المنتصف */
+  margin: 0 auto;
 }
 
 .filter-tabs button {
@@ -758,14 +759,18 @@ main.three-column-layout {
 
 @media (max-width: 600px) {
   .filter-tabs {
-    width: 100%;
+    width: 100%; /* العرض الكامل لمطابقة شريط البحث */
     justify-content: space-between;
+    align-self: stretch;
+    margin: 0;
+    box-sizing: border-box;
   }
   
   .filter-tabs button {
-    flex: 1;
-    padding: 8px 5px;
-    font-size: 0.8rem;
+    flex: 1; /* جعل كل زر يأخذ مساحة متساوية */
+    padding: 10px 5px;
+    font-size: 0.85rem;
+    text-align: center;
   }
 }
 

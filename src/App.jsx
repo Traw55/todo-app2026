@@ -34,12 +34,18 @@ function App() {
   // --- دوال مساعدة للوقت والتاريخ / Date and Time Helpers ---
   const getDefaultTime = () => {
     const d = new Date();
-    d.setHours(d.getHours() + 1);
-    return `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+    d.setHours(d.getHours() + 1); // التذكير بعد ساعة من الآن افتراضياً
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
   };
 
   const getDefaultDate = () => {
-    return new Date().toISOString().split("T")[0];
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   // --- حالات التطبيق (State Management) ---
