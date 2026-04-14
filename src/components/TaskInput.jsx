@@ -11,6 +11,10 @@ const TaskInput = ({
   setScheduledTime,
   reminderOffset,
   setReminderOffset,
+  selectedCategory,
+  setSelectedCategory,
+  taskNotes,
+  setTaskNotes,
   addTodo,
   t,
   lang
@@ -117,6 +121,35 @@ const TaskInput = ({
             <option value="15">{t.mins15}</option>
             <option value="30">{t.mins30}</option>
           </select>
+        </div>
+
+        {/* اختيار التصنيف / Category Selection */}
+        <div className="category-group">
+          <label>{t.categoryLabel}</label>
+          <div className="category-options">
+            {['work', 'personal', 'study', 'urgent'].map(cat => (
+              <button
+                key={cat}
+                type="button"
+                className={`category-btn ${selectedCategory === cat ? 'active' : ''} cat-${cat}`}
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {t[`cat${cat.charAt(0).toUpperCase() + cat.slice(1)}`]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* الملاحظات / Notes */}
+        <div className="notes-group">
+          <label>{t.notesLabel}</label>
+          <textarea
+            className="notes-input"
+            value={taskNotes}
+            onChange={(e) => setTaskNotes(e.target.value)}
+            placeholder={t.notesPlaceholder}
+            rows="2"
+          />
         </div>
 
         {/* زر الإضافة / Add task button */}

@@ -28,6 +28,10 @@ const TaskList = ({
   setEditTime, 
   editReminderOffset, 
   setEditReminderOffset, 
+  editCategory,
+  setEditCategory,
+  editNotes,
+  setEditNotes,
   saveEdit, 
   cancelEditing, 
   toggleTodo, 
@@ -70,6 +74,10 @@ const TaskList = ({
                 setEditTime={setEditTime}
                 editReminderOffset={editReminderOffset}
                 setEditReminderOffset={setEditReminderOffset}
+                editCategory={editCategory}
+                setEditCategory={setEditCategory}
+                editNotes={editNotes}
+                setEditNotes={setEditNotes}
                 saveEdit={saveEdit}
                 cancelEditing={cancelEditing}
                 toggleTodo={toggleTodo}
@@ -142,6 +150,10 @@ const TaskList = ({
                   setEditTime={setEditTime}
                   editReminderOffset={editReminderOffset}
                   setEditReminderOffset={setEditReminderOffset}
+                  editCategory={editCategory}
+                  setEditCategory={setEditCategory}
+                  editNotes={editNotes}
+                  setEditNotes={setEditNotes}
                   saveEdit={saveEdit}
                   cancelEditing={cancelEditing}
                   toggleTodo={toggleTodo}
@@ -258,6 +270,10 @@ const TaskList = ({
                       setEditTime={setEditTime}
                       editReminderOffset={editReminderOffset}
                       setEditReminderOffset={setEditReminderOffset}
+                      editCategory={editCategory}
+                      setEditCategory={setEditCategory}
+                      editNotes={editNotes}
+                      setEditNotes={setEditNotes}
                       saveEdit={saveEdit}
                       cancelEditing={cancelEditing}
                       toggleTodo={toggleTodo}

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 /**
  * مكون عنصر المهمة - يمثل مهمة واحدة في القائمة مع إمكانية العرض أو التحرير
  * Task Item Component - Represents a single task in the list with view/edit modes
@@ -17,6 +19,10 @@ const TaskItem = ({
   setEditTime, 
   editReminderOffset, 
   setEditReminderOffset, 
+  editCategory,
+  setEditCategory,
+  editNotes,
+  setEditNotes,
   saveEdit, 
   cancelEditing, 
   toggleTodo, 
@@ -26,6 +32,7 @@ const TaskItem = ({
   lang, 
   t 
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   // دالة لتحويل الوقت من 24 ساعة إلى 12 ساعة
   const formatTime12h = (timeStr) => {
     if (!timeStr) return "";
@@ -145,6 +152,30 @@ const TaskItem = ({
               <option value="30">{t.mins30}</option>
             </select>
           </div>
+
+          <div className="edit-category-group">
+            <div className="category-options-small">
+              {['work', 'personal', 'study', 'urgent'].map(cat => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`category-btn-small ${editCategory === cat ? 'active' : ''} cat-${cat}`}
+                  onClick={() => setEditCategory(cat)}
+                >
+                  {t[`cat${cat.charAt(0).toUpperCase() + cat.slice(1)}`]}
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          <textarea
+            className="edit-notes-input"
+            value={editNotes}
+            onChange={(e) => setEditNotes(e.target.value)}
+            placeholder={t.notesPlaceholder}
+            rows="2"
+          />
+
           {/* أزرار الحفظ والإلغاء / Save and Cancel buttons */}
           <div className="edit-actions">
             <button className="save-btn" onClick={() => saveEdit(index)}>{t.saveButton}</button>
@@ -153,9 +184,14 @@ const TaskItem = ({
         </div>
       ) : (
         /* وضع العرض / Display mode container */
-        <>
+        <div className="todo-item-display">
           <div className="todo-content">
-            <span className="todo-text">{todo.text}</span>
+            <div className="todo-header-row">
+              <span className={`category-badge cat-${todo.category || 'personal'}`}>
+                {t[`cat${(todo.category || 'personal').charAt(0).toUpperCase() + (todo.category || 'personal').slice(1)}`]}
+              </span>
+              <span className="todo-text">{todo.text}</span>
+            </div>
             <div className="todo-meta">
               <span className="todo-date">
                 {lang === 'ar' 
@@ -164,7 +200,23 @@ const TaskItem = ({
                 }
               </span>
               <span className="todo-time">{formatTime12h(todo.time)}</span>
+              {todo.notes && (
+                <button 
+                  className="notes-toggle-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(!isExpanded);
+                  }}
+                >
+                  {isExpanded ? t.hideNotes : t.showNotes}
+                </button>
+              )}
             </div>
+            {isExpanded && todo.notes && (
+              <div className="todo-notes-display">
+                <p>{todo.notes}</p>
+              </div>
+            )}
           </div>
           
           {/* أزرار التحكم (تظهر فقط عند عدم وجود وضع التحديد) / Item actions (only in non-selection mode) */}
@@ -215,7 +267,7 @@ const TaskItem = ({
               </button>
             </div>
           )}
-        </>
+        </div>
       )}
     </li>
   );

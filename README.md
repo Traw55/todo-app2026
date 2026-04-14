@@ -1,94 +1,70 @@
-# ✨ TaskSphere 2026 - Todo Dashboard
+# 🚀 TaskSphere 2026 | Ultimate Personal Task Manager
 
-A premium, modern personal dashboard built with **React 19** and **Vite**, designed to streamline productivity with a focus on aesthetics and user experience.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
-![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff0055?style=for-the-badge&logo=framer)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
----
-
-## 🌟 Overview
-
-**TaskSphere** is not just another todo list. It's a high-performance productivity tool featuring smooth animations, intelligent notifications, and a bilingual interface. Built with modern web standards, it ensures your tasks are managed efficiently and elegantly.
+**TaskSphere 2026** is a state-of-the-art, bilingual task management application designed for productivity enthusiasts who value both functionality and aesthetics. Built with a "Mobile-First" philosophy, it brings a premium, WhatsApp-style user experience to the web.
 
 ---
 
-## 🚀 Key Features
+## 🌟 Key Highlights
 
-### 🛠 Core Functionality
-- **Smart Task Management:** CRUD operations with dedicated sections for Overdue, Today, and Upcoming tasks.
-- **Precision Scheduling:** Integrated date and time pickers for exact deadlining.
-- **Intelligent Reminders:** Browser-level notifications triggered at custom intervals before task deadlines.
-- **Bulk Actions:** Selection mode for mass deletion and organization.
-
-### 🎨 UI & UX
-- **Dynamic Themes:** Seamless toggle between a sleek Dark Mode and a crisp Light Mode.
-- **Bilingual Support:** Full RTL/LTR support for **Arabic** and **English**.
-- **Smooth Animations:** Powered by `framer-motion` for a premium, interactive feel.
-- **Responsive Design:** Optimized for all screen sizes, from mobile to desktop.
-
-### ⚙️ Technical Highlights
-- **State Persistence:** LocalStorage integration to ensure your data stays safe across sessions.
-- **Real-time Clock:** Live dashboard clock reflecting time in the selected locale.
-- **Progress Tracking:** Interactive progress bars showing your daily completion rate.
+- **🌍 Full Bilingual Support:** Seamlessly switch between **Arabic** and **English** with optimized RTL/LTR layouts.
+- **📱 Modern Navigation:** A sleek, mobile-optimized Bottom Navigation bar inspired by top-tier messaging apps.
+- **🌗 Smart Theming:** Fully integrated Dark and Light modes that adapt to user preference.
+- **📊 Advanced Analytics:** Track your daily progress with a beautiful stats dashboard categorized by task types.
+- **❗ Priority Management:** Organize tasks into Work, Personal, Study, and **Urgent ❗** categories.
+- **🔔 Smart Reminders:** Never miss a deadline with customizable reminders and persistent notifications.
+- **✨ Premium UI/UX:** Features a unique "Centered Card" desktop layout, Glassmorphism effects, and smooth micro-animations.
 
 ---
 
-## 🏗️ Technologies Used
+## 🛠 Tech Stack
 
-- **Frontend Framework:** [React 19](https://react.dev/)
-- **Build Tool:** [Vite](https://vitejs.dev/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Styling:** Vanilla CSS3 with Custom Properties (CSS Variables)
-- **State Management:** React Hooks (useState, useEffect)
-- **Dev Workflow:** Assisted by **Trae AI** using **Gemini-3-Flash** for optimized code logic.
-
----
-
-## 🗺️ Roadmap (Future Enhancements)
-
-> [!NOTE]
-> These features are planned for future updates. I will consult my AI pair-programmer before implementation!
-
-- [ ] **Cloud Sync:** Integration with Supabase/Firebase for cross-device synchronization.
-- [ ] **Task Categorization:** Add custom tags (Work, Personal, Urgent) with color coding.
-- [ ] **Notes System:** Rich text support for adding detailed notes to each task.
-- [ ] **Drag & Drop:** Interactive reordering of tasks within their categories.
-- [ ] **Analytics Dashboard:** Graphical representation of productivity trends.
+- **Framework:** [React.js](https://reactjs.org/) (Hooks, State Management)
+- **Build Tool:** [Vite](https://vitejs.dev/) for lightning-fast development.
+- **Styling:** Vanilla CSS3 with Custom Properties (Variables), Flexbox, and Grid for high performance.
+- **Persistence:** LocalStorage API for offline-first data retention.
+- **Localization:** Custom i18n logic for real-time language switching.
 
 ---
 
-## 💻 Getting Started
+## 📐 Responsive Strategy
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- npm or yarn
+- **Desktop:** Elegant centered-card layout with wide margins for a premium "Software-as-a-Service" feel.
+- **Mobile:** Full-width, edge-to-edge experience for maximum usability on small screens.
 
-### Installation
+---
 
-1. Clone the repository:
+## 🚀 Installation & Setup
+
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Traw55/react-todo-app.git
+   git clone https://github.com/your-username/task-sphere-2026.git
    ```
-2. Navigate to the project directory:
+
+2. **Navigate to project directory:**
    ```bash
-   cd react-todo-app
+   cd task-sphere-2026
    ```
-3. Install dependencies:
+
+3. **Install dependencies:**
    ```bash
    npm install
    ```
-4. Start the development server:
+
+4. **Launch the development server:**
    ```bash
    npm run dev
    ```
 
 ---
 
-## 📄 License
+## 💼 Professional Profile
+**Developed by Traw**
+*Focusing on high-performance web applications and exceptional user experiences.*
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
 
-Developed with ❤️ by [Traw55](https://github.com/Traw55)
+> "Efficiency is doing things right; effectiveness is doing the right things." - TaskSphere 2026

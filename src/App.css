@@ -1,13 +1,12 @@
 /* مهام نشطة انتهى وقتها ولم تكتمل */
 :root {
-  /* Common */
   --accent-blue: #3b82f6;
   --accent-blue-light: #60a5fa;
   --danger: #ef4444;
   --success: #10b981;
   --urgent-yellow: #fbbf24;
   --overdue-gray: #64748b;
-  --container-max-width: 1000px;
+  --container-max-width: 850px; /* العرض المصغر المطلوب للكارد */
 }
 
 .dark-theme {
@@ -52,6 +51,7 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: flex-start; /* ليكون الكارت في الأعلى مع مسافة بسيطة */
   padding: 40px 20px;
   box-sizing: border-box;
   background-color: var(--bg-body);
@@ -59,6 +59,23 @@ body {
 
 .rtl { direction: rtl; }
 .ltr { direction: ltr; }
+
+/* تحسينات للجوال لتأخذ المساحة كاملة */
+@media (max-width: 850px) {
+  .app-wrapper {
+    padding: 0;
+  }
+  .web-container {
+    border-radius: 0;
+    width: 100%;
+    min-height: 100vh;
+    border: none;
+  }
+  .nav-container {
+    max-width: 100% !important;
+    border-radius: 0 !important;
+  }
+}
 
 .web-container {
   width: 100%;
@@ -247,11 +264,48 @@ header {
   color: white;
 }
 
-main {
-  padding: 25px;
+main.three-column-layout {
+  padding: 20px;
   display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 15px;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.layout-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0; /* Prevents grid items from overflowing */
+}
+
+.column-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  color: var(--accent-blue);
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  main.three-column-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .column-stats {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 800px) {
+  main.three-column-layout {
+    grid-template-columns: 1fr;
+  }
+  .column-stats {
+    grid-column: span 1;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1349,6 +1403,433 @@ main {
   border-right: 4px solid var(--urgent-yellow) !important;
 }
 
-.urgent-item .todo-time {
-  color: var(--urgent-yellow);
+/* ===== Category & Notes Features ===== */
+.category-group, .notes-group {
+  margin-bottom: 20px;
+}
+
+.category-group label, .notes-group label, .input-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.category-btn {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Category Colors - Full Glassy Background */
+.cat-work { background: rgba(59, 130, 246, 0.05); color: #3b82f6; border-color: rgba(59, 130, 246, 0.2); }
+.cat-work.active { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
+
+.cat-personal { background: rgba(16, 185, 129, 0.05); color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
+.cat-personal.active { background: rgba(16, 185, 129, 0.2); border-color: #10b981; }
+
+.cat-study { background: rgba(139, 92, 246, 0.05); color: #8b5cf6; border-color: rgba(139, 92, 246, 0.2); }
+.cat-study.active { background: rgba(139, 92, 246, 0.2); border-color: #8b5cf6; }
+
+.cat-urgent { background: rgba(239, 68, 68, 0.05); color: #ef4444; border-color: rgba(239, 68, 68, 0.2); }
+.cat-urgent.active { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
+
+.category-btn.active {
+  transform: scale(0.96);
+  font-weight: 800;
+}
+
+.notes-input, .notes-textarea {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  color: var(--text-primary);
+  padding: 12px 15px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+/* Task Item Display Enhancements */
+.todo-item-display {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.todo-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.cat-work.category-badge { background: #3b82f6; color: white; }
+.cat-personal.category-badge { background: #10b981; color: white; }
+.cat-study.category-badge { background: #8b5cf6; color: white; }
+.cat-urgent.category-badge { background: #ef4444; color: white; }
+
+.notes-toggle-btn {
+  background: rgba(59, 130, 246, 0.1);
+  border: none;
+  color: var(--accent-blue);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 50px;
+}
+
+.todo-notes-display {
+  margin-top: 5px;
+  padding: 12px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 12px;
+  border-right: 3px solid var(--accent-blue);
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.dark-theme .todo-notes-display {
+  background: rgba(255,255,255,0.03);
+}
+
+/* Stats Cards */
+.quick-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  padding: 15px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-card-header h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.stat-card-body {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 5px;
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-row span {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.stat-row strong {
+  font-size: 1.1rem;
+}
+
+.text-green {
+  color: #10b981;
+}
+
+/* Edit Mode Extensions */
+.category-options-small {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.category-btn-small {
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* ===== WhatsApp-Style Bottom Navigation ===== */
+.whatsapp-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center; /* توسيط الحاوية في اللابتوب */
+  pointer-events: none; /* لمنع التداخل مع الفراغات الجانبية */
+}
+
+.nav-container {
+  pointer-events: auto; /* إعادة تفعيل النقر داخل الحاوية */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-max-width); /* مساوٍ تماماً لعرض الكارد */
+  background: var(--bg-app);
+  border-top: 1px solid var(--glass-border);
+  padding: 10px 0 20px;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+  margin: 0 auto;
+}
+
+.nav-item {
+  flex: 1;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-icon-wrapper {
+  padding: 8px 32px; /* مساحة أكبر لخلفية الاختيار */
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item.active .nav-icon-wrapper {
+  background: rgba(59, 130, 246, 0.15); 
+  color: var(--accent-blue);
+}
+
+.nav-icon-img {
+  width: 44px; /* حجم كبير جداً وواضح لتلبية طلبك */
+  height: 44px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.nav-item:active .nav-icon-img {
+  transform: scale(0.85); /* زيادة تأثير الضغط */
+}
+
+/* الوضع الداكن: أيقونات بيضاء */
+.dark-theme .nav-icon-img {
+  filter: invert(1);
+}
+
+/* الوضع الفاتح: أيقونات سوداء */
+.light-theme .nav-icon-img {
+  filter: invert(0);
+}
+
+.nav-label {
+  font-size: 1.05rem; /* خط كبير جداً وواضح */
+  font-weight: 900; /* أقصى درجات الوضوح والغلظة */
+  margin-top: 6px;
+  letter-spacing: -0.3px;
+}
+
+.nav-item.active .nav-label {
+  color: var(--text-primary);
+}
+
+/* Tab View Layouts */
+.view-content {
+  width: 100%;
+  max-width: var(--container-max-width); /* توحيد العرض */
+  margin: 0 auto;
+  padding-bottom: 110px; 
+}
+
+.view-title {
+  font-size: 1.75rem; 
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-align: center;
+  color: var(--accent-blue);
+  letter-spacing: -0.5px;
+}
+
+.centered-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* التأكد من أن قسم الإدخال يفتح بكامل العرض المتاح له */
+.centered-view aside.input-section {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Stats Dashboard Grid (2 Columns Style) */
+.stats-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* مربعين يمين ويسار / Two columns */
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.stat-card-wide {
+  background: var(--bg-card);
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 140px;
+  justify-content: space-between;
+}
+
+@media (max-width: 500px) {
+  .stats-dashboard-grid {
+    grid-template-columns: 1fr; /* في الجوال الصغير جداً ترجع عمود واحد */
+  }
+}
+
+.stat-card-row {
+  display: flex;
+  flex-direction: column; /* جعل الأيقونة والاسم فوق بعض قليلاً */
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.stat-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-card-icon {
+  font-size: 1.8rem;
+}
+
+.stat-card-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.stat-card-values {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding-top: 10px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.stat-item-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mini-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.mini-val {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.mini-val.green {
+  color: #10b981;
+}
+
+.mini-progress-track {
+  height: 6px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dark-theme .mini-progress-track {
+  background: rgba(255,255,255,0.05);
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cleaning up old 3-column styles if any */
+.three-column-layout {
+  display: block; /* Revert grid */
 }

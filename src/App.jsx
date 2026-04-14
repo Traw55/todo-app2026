@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import ProgressBar from "./components/ProgressBar";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
+import BottomNav from "./components/BottomNav";
 
 /**
  * دوال حماية التخزين المحلي / Safe LocalStorage Helpers
@@ -48,6 +49,8 @@ function App() {
   const [scheduledTime, setScheduledTime] = useState(getDefaultTime());
   const [scheduledDate, setScheduledDate] = useState(getDefaultDate());
   const [reminderOffset, setReminderOffset] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("personal");
+  const [taskNotes, setTaskNotes] = useState("");
   const [todos, setTodos] = useState(() => safeGetItem("todos", []));
   const [lang, setLang] = useState(() => safeGetItem("lang", "ar"));
   const [theme, setTheme] = useState(() => safeGetItem("theme", "dark"));
@@ -57,6 +60,8 @@ function App() {
   const [editTime, setEditTime] = useState("");
   const [editDate, setEditDate] = useState("");
   const [editReminderOffset, setEditReminderOffset] = useState(0);
+  const [editCategory, setEditCategory] = useState("personal");
+  const [editNotes, setEditNotes] = useState("");
   const [collapsedSections, setCollapsedSections] = useState({
     overdue: false,
     current: false,
@@ -67,6 +72,7 @@ function App() {
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterTab, setFilterTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("add"); // إضافة مهمة هي الأساسية
 
   const t = translations[lang];
 
@@ -157,6 +163,8 @@ function App() {
         time: scheduledTime,
         date: scheduledDate,
         reminderOffset: reminderOffset,
+        category: selectedCategory,
+        notes: taskNotes,
         completed: false,
         notified: false,
         notifiedBefore: false,
@@ -166,6 +174,9 @@ function App() {
     setScheduledTime(getDefaultTime());
     setScheduledDate(getDefaultDate());
     setReminderOffset(0);
+    setSelectedCategory("personal");
+    setTaskNotes("");
+    setActiveTab("tasks"); // حول لصفحة المهام بعد الإضافة
   };
 
   const deleteTodo = (index) => {
@@ -232,6 +243,8 @@ function App() {
     setEditTime(todos[index].time);
     setEditDate(todos[index].date);
     setEditReminderOffset(todos[index].reminderOffset || 0);
+    setEditCategory(todos[index].category || "personal");
+    setEditNotes(todos[index].notes || "");
   };
 
   const cancelEditing = () => {
@@ -240,6 +253,8 @@ function App() {
     setEditTime("");
     setEditDate("");
     setEditReminderOffset(0);
+    setEditCategory("personal");
+    setEditNotes("");
   };
 
   const saveEdit = (index) => {
@@ -251,6 +266,8 @@ function App() {
       time: editTime,
       date: editDate,
       reminderOffset: editReminderOffset,
+      category: editCategory,
+      notes: editNotes,
       notified: false,
       notifiedBefore: false,
     };
@@ -301,8 +318,8 @@ function App() {
   const currentTimeStr = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
   
   const totalTasks = todos.length;
-  const completedTasks = todos.filter(t => t.completed).length;
-  const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  const completedTasksCount = todos.filter(t => t.completed).length;
+  const progressPercentage = totalTasks > 0 ? Math.round((completedTasksCount / totalTasks) * 100) : 0;
 
   const filteredTodos = todos.filter(todo => 
     todo.text.toLowerCase().includes(searchQuery.toLowerCase())
@@ -323,6 +340,10 @@ function App() {
     }));
   };
 
+  // إحصائيات التصنيفات / Category Statistics
+  const catKeys = ['work', 'personal', 'study', 'urgent'];
+  const getCatTitle = (cat) => t[`cat${cat.charAt(0).toUpperCase() + cat.slice(1)}`];
+
   // --- عرض المكون (Render) ---
   return (
     <div className={`app-wrapper ${lang === "ar" ? "rtl" : "ltr"} ${theme}-theme`}>
@@ -340,62 +361,123 @@ function App() {
           toggleLang={toggleLang}
           t={t}
         />
-        <main>
-          <h1 className="main-title">{t.title}</h1>
-          <ProgressBar 
-            totalTasks={totalTasks}
-            completedTasks={completedTasks}
-            progressPercentage={progressPercentage}
-            t={t}
-          />
-          <TaskInput 
-            task={task}
-            setTask={setTask}
-            scheduledDate={scheduledDate}
-            setScheduledDate={setScheduledDate}
-            scheduledTime={scheduledTime}
-            setScheduledTime={setScheduledTime}
-            reminderOffset={reminderOffset}
-            setReminderOffset={setReminderOffset}
-            addTodo={addTodo}
-            t={t}
-            lang={lang}
-          />
-          <TaskList 
-            todos={todos}
-            categories={categories}
-            collapsedSections={collapsedSections}
-            toggleSection={toggleSection}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            filterTab={filterTab}
-            setFilterTab={setFilterTab}
-            selectionMode={selectionMode}
-            selectedTasks={selectedTasks}
-            toggleSelection={toggleSelection}
-            startSelectionMode={startSelectionMode}
-            cancelSelectionMode={cancelSelectionMode}
-            bulkDelete={bulkDelete}
-            editingIndex={editingIndex}
-            editTask={editTask}
-            setEditTask={setEditTask}
-            editDate={editDate}
-            setEditDate={setEditDate}
-            editTime={editTime}
-            setEditTime={setEditTime}
-            editReminderOffset={editReminderOffset}
-            setEditReminderOffset={setEditReminderOffset}
-            saveEdit={saveEdit}
-            cancelEditing={cancelEditing}
-            toggleTodo={toggleTodo}
-            startEditing={startEditing}
-            deleteTodo={deleteTodo}
-            todayStr={todayStr}
-            getTaskLabel={getTaskLabel}
-            lang={lang}
-            t={t}
-          />
+        <main className="tab-view-container">
+          {activeTab === 'tasks' && (
+            <div className="view-content fade-in">
+              <h2 className="view-title">{t.tasks1 || 'المهام'}</h2>
+              <TaskList 
+                todos={todos}
+                categories={categories}
+                collapsedSections={collapsedSections}
+                toggleSection={toggleSection}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                filterTab={filterTab}
+                setFilterTab={setFilterTab}
+                selectionMode={selectionMode}
+                selectedTasks={selectedTasks}
+                toggleSelection={toggleSelection}
+                startSelectionMode={startSelectionMode}
+                cancelSelectionMode={cancelSelectionMode}
+                bulkDelete={bulkDelete}
+                editingIndex={editingIndex}
+                editTask={editTask}
+                setEditTask={setEditTask}
+                editDate={editDate}
+                setEditDate={setEditDate}
+                editTime={editTime}
+                setEditTime={setEditTime}
+                editReminderOffset={editReminderOffset}
+                setEditReminderOffset={setEditReminderOffset}
+                editCategory={editCategory}
+                setEditCategory={setEditCategory}
+                editNotes={editNotes}
+                setEditNotes={setEditNotes}
+                saveEdit={saveEdit}
+                cancelEditing={cancelEditing}
+                toggleTodo={toggleTodo}
+                startEditing={startEditing}
+                deleteTodo={deleteTodo}
+                todayStr={todayStr}
+                getTaskLabel={getTaskLabel}
+                lang={lang}
+                t={t}
+              />
+            </div>
+          )}
+
+          {activeTab === 'add' && (
+            <div className="view-content centered-view fade-in">
+              <h2 className="view-title">{t.addButton || 'إضافة مهمة'}</h2>
+              <TaskInput 
+                task={task}
+                setTask={setTask}
+                scheduledDate={scheduledDate}
+                setScheduledDate={setScheduledDate}
+                scheduledTime={scheduledTime}
+                setScheduledTime={setScheduledTime}
+                reminderOffset={reminderOffset}
+                setReminderOffset={setReminderOffset}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                taskNotes={taskNotes}
+                setTaskNotes={setTaskNotes}
+                addTodo={addTodo}
+                t={t}
+                lang={lang}
+              />
+            </div>
+          )}
+
+          {activeTab === 'stats' && (
+            <div className="view-content fade-in">
+              <h2 className="view-title">{t.progressTitle || 'الإحصائيات'}</h2>
+              <ProgressBar 
+                totalTasks={totalTasks}
+                completedTasks={completedTasksCount}
+                progressPercentage={progressPercentage}
+                t={t}
+              />
+              
+              <div className="stats-dashboard-grid">
+                {catKeys.map(cat => {
+                  const catTasks = todos.filter(tod => tod.category === cat);
+                  const done = catTasks.filter(tod => tod.completed).length;
+                  const total = catTasks.length;
+                  return (
+                    <div key={cat} className={`stat-card-wide cat-${cat}`}>
+                      <div className="stat-card-row">
+                        <div className="stat-card-info">
+                          <span className="stat-card-icon">
+                            {cat === 'work' ? '💼' : cat === 'personal' ? '🏠' : cat === 'study' ? '📚' : '❗'}
+                          </span>
+                          <h4>{getCatTitle(cat)}</h4>
+                        </div>
+                        <div className="stat-card-values">
+                          <div className="stat-item-mini">
+                            <span className="mini-label">{lang === 'ar' ? 'الكل' : 'Total'}</span>
+                            <span className="mini-val">{total}</span>
+                          </div>
+                          <div className="stat-item-mini">
+                            <span className="mini-label">{lang === 'ar' ? 'منجز' : 'Done'}</span>
+                            <span className="mini-val green">{done}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mini-progress-track">
+                        <div 
+                          className="mini-progress-fill" 
+                          style={{ width: `${total > 0 ? (done/total)*100 : 0}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </main>
+        <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} t={t} lang={lang} />
       </div>
     </div>
   );
