@@ -91,6 +91,7 @@ body {
     width: 100%;
     min-height: 100vh;
     border: none;
+    zoom: 1; /* الحجم الكامل للجوال لسهولة اللمس */
   }
 
   .nav-container {
@@ -109,6 +110,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  zoom: 0.88; /* الحجم المثالي للكمبيوتر */
 }
 
 header {
@@ -1893,30 +1895,52 @@ main.three-column-layout {
   }
 }
 
-.stat-card-row {
+.stat-card-header-row {
   display: flex;
-  flex-direction: column;
-  /* جعل الأيقونة والاسم فوق بعض قليلاً */
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  text-align: center;
+  width: 100%;
 }
 
 .stat-card-info {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 12px;
 }
 
 .stat-card-icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  background: var(--bg-input);
+  padding: 8px;
+  border-radius: 12px;
+  line-height: 1;
 }
 
 .stat-card-info h4 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
+}
+
+.stat-percentage-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: end;
+}
+
+.pct-num {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--accent-blue);
+  line-height: 1;
+}
+
+.pct-label {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .stat-card-values {
@@ -1943,6 +1967,14 @@ main.three-column-layout {
 .mini-val {
   font-size: 1rem;
   font-weight: 800;
+}
+
+.mini-val.blue {
+  color: var(--accent-blue);
+}
+
+.mini-val.orange {
+  color: #f59e0b; /* Amber/Orange for pending */
 }
 
 .mini-val.green {

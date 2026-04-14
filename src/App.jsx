@@ -450,30 +450,43 @@ function App() {
                   const catTasks = todos.filter(tod => tod.category === cat);
                   const done = catTasks.filter(tod => tod.completed).length;
                   const total = catTasks.length;
+                  const pending = total - done;
+                  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
                   return (
                     <div key={cat} className={`stat-card-wide cat-${cat}`}>
-                      <div className="stat-card-row">
+                      <div className="stat-card-header-row">
                         <div className="stat-card-info">
                           <span className="stat-card-icon">
                             {cat === 'work' ? '💼' : cat === 'personal' ? '🏠' : cat === 'study' ? '📚' : '❗'}
                           </span>
                           <h4>{getCatTitle(cat)}</h4>
                         </div>
-                        <div className="stat-card-values">
-                          <div className="stat-item-mini">
-                            <span className="mini-label">{lang === 'ar' ? 'الكل' : 'Total'}</span>
-                            <span className="mini-val">{total}</span>
-                          </div>
-                          <div className="stat-item-mini">
-                            <span className="mini-label">{lang === 'ar' ? 'منجز' : 'Done'}</span>
-                            <span className="mini-val green">{done}</span>
-                          </div>
+                        <div className="stat-percentage-badge">
+                          <span className="pct-num">{pct}%</span>
+                          <span className="pct-label">{lang === 'ar' ? 'مكتمل' : 'Done'}</span>
                         </div>
                       </div>
+                      
+                      <div className="stat-card-values">
+                        <div className="stat-item-mini">
+                          <span className="mini-label">{lang === 'ar' ? 'الكل' : 'Total'}</span>
+                          <span className="mini-val blue">{total}</span>
+                        </div>
+                        <div className="stat-item-mini">
+                          <span className="mini-label">{lang === 'ar' ? 'متبقي' : 'Left'}</span>
+                          <span className="mini-val orange">{pending}</span>
+                        </div>
+                        <div className="stat-item-mini">
+                          <span className="mini-label">{lang === 'ar' ? 'منجز' : 'Done'}</span>
+                          <span className="mini-val green">{done}</span>
+                        </div>
+                      </div>
+
                       <div className="mini-progress-track">
                         <div 
                           className="mini-progress-fill" 
-                          style={{ width: `${total > 0 ? (done/total)*100 : 0}%` }}
+                          style={{ width: `${pct}%` }}
                         ></div>
                       </div>
                     </div>
