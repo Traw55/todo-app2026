@@ -6,6 +6,9 @@
 
 **TaskSphere 2026** is a state-of-the-art, bilingual task management application designed for productivity enthusiasts who value both functionality and aesthetics. Built with a "Mobile-First" philosophy, it brings a premium, WhatsApp-style user experience to the web.
 
+> [!NOTE]
+> This project was developed using **AI-Assisted Development** techniques, demonstrating the power of human-AI collaboration in building high-quality, modern web applications.
+
 ---
 
 ## 🌟 Key Highlights
