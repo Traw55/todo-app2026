@@ -1644,7 +1644,7 @@ main.three-column-layout {
 }
 
 .nav-icon-wrapper {
-  padding: 8px 32px; /* مساحة أكبر لخلفية الاختيار */
+  padding: 6px 24px; /* كبسولة أنحف وأكثر أناقة */
   border-radius: 20px;
   transition: all 0.2s ease;
   display: flex;
@@ -1658,14 +1658,14 @@ main.three-column-layout {
 }
 
 .nav-icon-img {
-  width: 44px; /* حجم كبير جداً وواضح لتلبية طلبك */
-  height: 44px;
+  width: 30px; /* الحجم الاحترافي المتوازن */
+  height: 30px;
   object-fit: contain;
   transition: transform 0.2s ease;
 }
 
 .nav-item:active .nav-icon-img {
-  transform: scale(0.85); /* زيادة تأثير الضغط */
+  transform: scale(0.92); /* تأثير ضغط خفيف */
 }
 
 /* الوضع الداكن: أيقونات بيضاء */
@@ -1679,10 +1679,10 @@ main.three-column-layout {
 }
 
 .nav-label {
-  font-size: 1.05rem; /* خط كبير جداً وواضح */
-  font-weight: 900; /* أقصى درجات الوضوح والغلظة */
-  margin-top: 6px;
-  letter-spacing: -0.3px;
+  font-size: 0.85rem; /* حجم خط أنيق ومناسب */
+  font-weight: 700; /* خط واضح ومعتدل */
+  margin-top: 4px;
+  letter-spacing: -0.2px;
 }
 
 .nav-item.active .nav-label {

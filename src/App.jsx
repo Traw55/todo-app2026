@@ -364,7 +364,7 @@ function App() {
         <main className="tab-view-container">
           {activeTab === 'tasks' && (
             <div className="view-content fade-in">
-              <h2 className="view-title">{t.tasks1 || 'المهام'}</h2>
+              <h2 className="view-title">{lang === 'ar' ? 'المهام' : 'Tasks'}</h2>
               <TaskList 
                 todos={todos}
                 categories={categories}
